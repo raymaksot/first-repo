@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput } from 'r
 import { apiGet, apiPost } from '@/services/api';
 import { useRoute } from '@react-navigation/native';
 import { useAppSelector } from '@/store/hooks';
+import { groupsService } from '@/services/groupsService';
 
 interface Member { userId: string; role: 'owner' | 'member' }
 interface Group { _id: string; name: string; description?: string }
@@ -39,10 +40,48 @@ export default function GroupDetailScreen() {
 		setMsg('');
 	}
 
+	const isUserMember = user && members.some(member => member.userId === user._id);
+
+	async function joinGroup() {
+		if (!user) return;
+		try {
+			await groupsService.join(id);
+			// Add current user to members list
+			setMembers(prev => [...prev, { userId: user._id, role: 'member' }]);
+		} catch (error) {
+			console.error('Failed to join group:', error);
+		}
+	}
+
+	async function leaveGroup() {
+		if (!user) return;
+		try {
+			await groupsService.leave(id);
+			// Remove current user from members list
+			setMembers(prev => prev.filter(member => member.userId !== user._id));
+		} catch (error) {
+			console.error('Failed to leave group:', error);
+		}
+	}
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>{group?.name}</Text>
 			<Text style={{ color: '#6b7280' }}>{group?.description}</Text>
+
+			{user && (
+				<View style={{ marginTop: 12, marginBottom: 8 }}>
+					{isUserMember ? (
+						<TouchableOpacity onPress={leaveGroup} style={styles.leaveButton}>
+							<Text style={styles.leaveButtonText}>Leave</Text>
+						</TouchableOpacity>
+					) : (
+						<TouchableOpacity onPress={joinGroup} style={styles.primary}>
+							<Text style={styles.primaryText}>Join</Text>
+						</TouchableOpacity>
+					)}
+				</View>
+			)}
 
 			<Text style={styles.section}>Members</Text>
 			<FlatList data={members} keyExtractor={(i) => i.userId} renderItem={({ item }) => <Text>- {item.userId} {item.role === 'owner' ? '(Owner)' : ''}</Text>} />
@@ -67,4 +106,6 @@ const styles = StyleSheet.create({
 	input: { flex: 1, borderColor: '#e5e7eb', borderWidth: 1, borderRadius: 8, padding: 10 },
 	primary: { backgroundColor: '#0E7490', borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12 },
 	primaryText: { color: '#fff', fontWeight: '600' },
+	leaveButton: { backgroundColor: '#dc2626', borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12 },
+	leaveButtonText: { color: '#fff', fontWeight: '600' },
 });
