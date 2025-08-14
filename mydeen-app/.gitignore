@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+*.log
+.env
+*.keystore
+*.jks
+*.p12
+.DS_Store
+.idea/
+.vscode/
+.expo-go
