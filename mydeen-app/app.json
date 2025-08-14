@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "MyDeen",
+    "slug": "mydeen-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mydeen.app"
+    },
+    "android": {
+      "package": "com.mydeen.app",
+      "permissions": [
+        "NOTIFICATIONS",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      },
+      "backendBaseUrl": "http://10.0.2.2:3000",
+      "googleWebClientId": "",
+      "googleMapsApiKey": ""
+    }
+  }
+}
