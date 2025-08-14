@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { useRoute } from '@react-navigation/native';
 import { qaService, QAItem } from '@/services/qaService';
 import { useAppSelector } from '@/store/hooks';
+import { CommentsThread } from '@/components/CommentsThread';
+import { useOfflineSync } from '@/offline/useOfflineSync';
 
 export default function QADetailScreen() {
 	const route = useRoute<any>();
@@ -11,6 +13,8 @@ export default function QADetailScreen() {
 	const [answer, setAnswer] = useState('');
 	const [loading, setLoading] = useState(false);
 	const user = useAppSelector((s) => s.auth.user);
+	const [answerLikes, setAnswerLikes] = useState(0);
+	const { pending } = useOfflineSync();
 
 	useEffect(() => {
 		(async () => {
@@ -39,6 +43,12 @@ export default function QADetailScreen() {
 			<Text style={styles.q}>{item?.question}</Text>
 			<Text style={styles.section}>Answer</Text>
 			<Text>{item?.answer || 'Not answered yet'}</Text>
+			<View style={{ marginTop: 8, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+				<TouchableOpacity onPress={() => setAnswerLikes((n) => n + 1)} style={styles.likeBtn}>
+					<Text>Like answer</Text>
+				</TouchableOpacity>
+				<Text>{answerLikes} likes</Text>
+			</View>
 			{canAnswer && (
 				<View style={{ marginTop: 12 }}>
 					<TextInput value={answer} onChangeText={setAnswer} placeholder="Write your answer" style={styles.input} multiline />
@@ -47,6 +57,10 @@ export default function QADetailScreen() {
 					</TouchableOpacity>
 				</View>
 			)}
+			<Text style={styles.section}>Comments {pending ? `(queue: ${pending})` : ''}</Text>
+			{item?._id ? (
+				<CommentsThread parentType="qaAnswer" parentId={item._id} canEdit={(c) => c.userId === user?._id || user?.role === 'admin'} />
+			) : null}
 		</View>
 	);
 }
@@ -59,4 +73,5 @@ const styles = StyleSheet.create({
 	input: { borderColor: '#e5e7eb', borderWidth: 1, borderRadius: 8, padding: 12, minHeight: 80 },
 	btn: { marginTop: 8, backgroundColor: '#0E7490', paddingVertical: 10, borderRadius: 8, alignItems: 'center' },
 	btnText: { color: '#fff', fontWeight: '600' },
+	likeBtn: { backgroundColor: '#f3f4f6', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 8 },
 });

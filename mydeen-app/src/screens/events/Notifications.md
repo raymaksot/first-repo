@@ -1,0 +1,2 @@
+- Event reminders: local notifications scheduled upon RSVP; backend can also push via Expo token.
+- Preferences are stored under `app:prefs:notifications` in AsyncStorage and honored by UI.

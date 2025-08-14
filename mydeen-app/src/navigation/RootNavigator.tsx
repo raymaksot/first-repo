@@ -18,6 +18,12 @@ import ArticleDetailScreen from '@/screens/articles/ArticleDetailScreen';
 import SurahDetailScreen from '@/screens/quran/SurahDetailScreen';
 import VerseDetailScreen from '@/screens/quran/VerseDetailScreen';
 import QADetailScreen from '@/screens/qa/QADetailScreen';
+import AdminDashboardScreen from '@/screens/admin/AdminDashboardScreen';
+import ReadingGroupsScreen from '@/screens/groups/ReadingGroupsScreen';
+import GroupDetailScreen from '@/screens/groups/GroupDetailScreen';
+import EventsScreen from '@/screens/events/EventsScreen';
+import EventDetailScreen from '@/screens/events/EventDetailScreen';
+import { TermsScreen, PrivacyScreen } from '@/screens/settings/TermsPrivacyScreens';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -31,12 +37,15 @@ function MainTabs() {
 			<Tabs.Screen name="Hadith" component={HadithScreen} />
 			<Tabs.Screen name="QA" component={QAScreen} />
 			<Tabs.Screen name="Places" component={PlacesScreen} />
+			<Tabs.Screen name="Groups" component={ReadingGroupsScreen} />
+			<Tabs.Screen name="Events" component={EventsScreen} />
 		</Tabs.Navigator>
 	);
 }
 
 export default function RootNavigator() {
 	const token = useAppSelector((s) => s.auth.token);
+	const user = useAppSelector((s) => s.auth.user);
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			{!token ? (
@@ -54,6 +63,11 @@ export default function RootNavigator() {
 					<Stack.Screen name="SurahDetail" component={SurahDetailScreen} />
 					<Stack.Screen name="VerseDetail" component={VerseDetailScreen} />
 					<Stack.Screen name="QADetail" component={QADetailScreen} />
+					<Stack.Screen name="GroupDetail" component={GroupDetailScreen} />
+					<Stack.Screen name="EventDetail" component={EventDetailScreen} />
+					{user?.role === 'admin' && <Stack.Screen name="Admin" component={AdminDashboardScreen} />}
+					<Stack.Screen name="Terms" component={TermsScreen} />
+					<Stack.Screen name="Privacy" component={PrivacyScreen} />
 					<Stack.Screen name="Settings" component={SettingsScreen} />
 				</>
 			)}

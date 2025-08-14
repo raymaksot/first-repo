@@ -25,3 +25,7 @@ export async function registerForPushNotificationsAsync(): Promise<string | unde
 	}
 	return token;
 }
+
+export async function notifyContent(title: string, body: string, data?: Record<string, string>): Promise<void> {
+	await Notifications.scheduleNotificationAsync({ content: { title, body, data }, trigger: null });
+}

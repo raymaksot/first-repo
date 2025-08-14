@@ -1,0 +1,3 @@
+- Settings offer toggles for large text and high-contrast mode.
+- Ensure semantic roles on touch targets and adequate sizes for tappable controls (min 44x44pt).
+- All user-facing strings should come from i18n for localization.

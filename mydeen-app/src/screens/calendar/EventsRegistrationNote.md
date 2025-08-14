@@ -1,0 +1,3 @@
+- Event registration is available under the Events tab.
+- RSVP to schedule a local reminder 30 minutes before start.
+- Server can also push reminders via Expo Push tokens registered at `/api/devices/register`.
