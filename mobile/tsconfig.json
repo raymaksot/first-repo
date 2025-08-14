@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "es2017",
+		"module": "esnext",
+		"jsx": "react",
+		"strict": true,
+		"noEmit": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"types": ["jest", "react", "react-native"]
+	},
+	"include": ["src", "jest.setup.ts"],
+	"exclude": ["node_modules"]
+}
