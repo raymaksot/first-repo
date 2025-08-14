@@ -28,6 +28,21 @@ api.interceptors.response.use(
 	}
 );
 
+export async function apiGet<T = any>(url: string, config?: any): Promise<T> {
+	const { data } = await api.get<T>(url, config);
+	return data;
+}
+
+export async function apiPost<T = any>(url: string, body?: any, config?: any): Promise<T> {
+	const { data } = await api.post<T>(url, body, config);
+	return data;
+}
+
+export async function apiDelete<T = any>(url: string, config?: any): Promise<T> {
+	const { data } = await api.delete<T>(url, config);
+	return data;
+}
+
 export interface Paginated<T> {
 	data: T[];
 	page: number;

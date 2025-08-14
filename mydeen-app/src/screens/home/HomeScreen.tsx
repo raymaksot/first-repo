@@ -13,6 +13,7 @@ export default function HomeScreen() {
 	const [times, setTimes] = useState<PrayerTimesResponse | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const calcMethod = useAppSelector((s) => s.preferences.prayer.calculationMethod);
+	const [syncing, setSyncing] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -56,11 +57,6 @@ export default function HomeScreen() {
 				</TouchableOpacity>
 			</View>
 
-			<View style={styles.card}>
-				<Text style={styles.sectionTitle}>Featured Articles</Text>
-				<Text>Coming soon...</Text>
-			</View>
-
 			<View style={styles.quickGrid}>
 				<TouchableOpacity style={styles.quickItem} onPress={() => navigation.navigate('Quran')}>
 					<Text>Qur'an</Text>
@@ -77,6 +73,17 @@ export default function HomeScreen() {
 				<TouchableOpacity style={styles.quickItem} onPress={() => navigation.navigate('Places')}>
 					<Text>Places</Text>
 				</TouchableOpacity>
+				<TouchableOpacity style={styles.quickItem} onPress={() => navigation.navigate('Groups')}>
+					<Text>Groups</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.quickItem} onPress={() => navigation.navigate('Events')}>
+					<Text>Events</Text>
+				</TouchableOpacity>
+			</View>
+
+			<View style={[styles.card, { marginTop: 16 }]}>
+				<Text style={styles.sectionTitle}>Sync</Text>
+				<Text style={{ color: syncing ? '#0E7490' : '#6b7280' }}>{syncing ? 'Syncing changes…' : 'All changes synced'}</Text>
 			</View>
 		</ScrollView>
 	);

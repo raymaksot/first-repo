@@ -10,8 +10,8 @@ import RootNavigator from '@/navigation/RootNavigator';
 import i18n from './src/i18n';
 import { useAppSelector } from '@/store/hooks';
 import { initAuthFromStorage } from '@/store/authSlice';
-import { registerForPushNotificationsAsync } from '@/services/notifications';
 import { registerBackgroundTasks } from '@/services/background';
+import { registerDeviceTokenWithBackend } from '@/notifications/registerDeviceToken';
 
 function AppInner() {
 	const themeMode = useAppSelector((s) => s.preferences.themeMode);
@@ -22,7 +22,7 @@ function AppInner() {
 		store.dispatch(initAuthFromStorage());
 		(async () => {
 			if (Device.isDevice) {
-				await registerForPushNotificationsAsync();
+				await registerDeviceTokenWithBackend();
 			}
 			await registerBackgroundTasks();
 		})();

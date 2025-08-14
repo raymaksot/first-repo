@@ -1,0 +1,3 @@
+- Scholars or admins can answer questions in detail screens.
+- All users can comment on answers; authors can edit or delete their comments.
+- Like/unlike is available for answers and comments.
