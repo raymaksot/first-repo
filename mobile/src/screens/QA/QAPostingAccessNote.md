@@ -1,0 +1,2 @@
+- Only users with role `scholar` should see and access the Answer flow.
+- Use `useCanAnswer()` from `src/screens/QA/QAFlowHooks.ts` or hide the navigation route conditionally.
