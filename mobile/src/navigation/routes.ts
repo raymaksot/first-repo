@@ -1,0 +1,15 @@
+export enum Routes {
+  Home = 'Home',
+  Quran = 'Quran',
+  Hadith = 'Hadith',
+  Duas = 'Duas',
+  QAList = 'QAList',
+  QADetail = 'QADetail',
+  QAAsk = 'QAAsk',
+  QAAnswer = 'QAAnswer',
+  Places = 'Places',
+  Qibla = 'Qibla',
+  Zakat = 'Zakat',
+  Calendar = 'Calendar',
+  Settings = 'Settings',
+}
